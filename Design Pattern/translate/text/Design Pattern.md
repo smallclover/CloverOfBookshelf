@@ -47,9 +47,9 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
        }
     }
 ```
-```java
-**ProxyImage.java**
 
+**ProxyImage.java**
+```java
     public class ProxyImage implements Image{
     
        private RealImage realImage;
@@ -78,11 +78,9 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
     	
        public static void main(String[] args) {
           Image image = new ProxyImage("test_10mb.jpg");
-    
           //image will be loaded from disk
           image.display(); 
           System.out.println("");
-          
           //image will not be loaded from disk
           image.display(); 	
        }
