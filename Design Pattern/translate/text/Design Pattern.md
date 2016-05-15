@@ -10,7 +10,7 @@
 我们将创建一个Image接口并且创建具体类实现Image接口。ProxyImage是一个代理类，使用它可以减少RealImage对象加载带来的内存占用。
 ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对象并且如果需要可以展示它。
  
-![image](https://github.com/smallclover/CloverOfBookshelf/Design Pattern/translate/image/Proxy Pattern.png)
+![image](/Design Pattern/translate/image/Proxy Pattern.png)
 
 ### 第一步
 
