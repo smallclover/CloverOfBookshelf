@@ -17,17 +17,17 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
 创建一个接口
 
 **Image.java**
-
+```java
     public interface Image {
        void display();
     }
-
+```
 ### 第二步
 
 创建具体类实现Image接口
 
 **RealImage.java**
-
+```java
     public class RealImage implements Image {
     
        private String fileName;
@@ -46,7 +46,8 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
           System.out.println("Loading " + fileName);
        }
     }
-
+```
+```java
 **ProxyImage.java**
 
     public class ProxyImage implements Image{
@@ -66,13 +67,13 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
           realImage.display();
        }
     }
-
+```
 ### 第三步
 
 使用ProxyImage在需要的时候获得RealImage类的对象
 
 **ProxyPatternDemo.java**
-```
+```java
     public class ProxyPatternDemo {
     	
        public static void main(String[] args) {
