@@ -69,7 +69,7 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
 
 使用ProxyImage在需要的时候获得RealImage类的对象
 **ProxyPatternDemo.java**
-
+```
     public class ProxyPatternDemo {
     	
        public static void main(String[] args) {
@@ -83,7 +83,7 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
           image.display(); 	
        }
     }
-
+```
 ### 第四步
 
 
