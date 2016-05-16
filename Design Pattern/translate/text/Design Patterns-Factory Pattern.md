@@ -15,7 +15,7 @@
 `FactoryPatternDemo`，我们的demo类将通过图形工厂来获得图形对象。通过传送信息（圆、矩形、正方形）到图形工厂来获得我们所需要的类型的对象。
 
 
-![clipboard.png](/Design Pattern/translate/image/Factory Pattern.png)
+![image](/Design Pattern/translate/image/Factory Pattern.png)
 
 
 ### 第一步##
