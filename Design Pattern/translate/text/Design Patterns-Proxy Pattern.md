@@ -23,79 +23,91 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
 
 **Image.java**
 
-    <span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title">Image</span> {
-       <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span></span>;
-    }
-    `</pre>
+```java
+public interface Image {
+   void display();
+}
+```
 
-    ### 第二步
+### 第二步
 
-    创建具体类实现Image接口
+创建具体类实现Image接口
 
-    **RealImage.java**
+**RealImage.java**
 
-    <pre>`<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RealImage</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Image</span> </span>{
+```java
+public class RealImage implements Image {
 
-       <span class="hljs-keyword">private</span> String fileName;
+   private String fileName;
 
-       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">RealImage</span><span class="hljs-params">(String fileName)</span></span>{
-          <span class="hljs-keyword">this</span>.fileName = fileName;
-          loadFromDisk(fileName);
-       }
+   public RealImage(String fileName){
+      this.fileName = fileName;
+      loadFromDisk(fileName);
+   }
 
-       <span class="hljs-annotation">@Override</span>
-       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>{
-          System.out.println(<span class="hljs-string">"Displaying "</span> + fileName);
-       }
+   @Override
+   public void display() {
+      System.out.println("Displaying " + fileName);
+   }
 
-       <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadFromDisk</span><span class="hljs-params">(String fileName)</span></span>{
-          System.out.println(<span class="hljs-string">"Loading "</span> + fileName);
-       }
-    }
-    `</pre>
+   private void loadFromDisk(String fileName){
+      System.out.println("Loading " + fileName);
+   }
+}
 
-    **ProxyImage.java**
+```
+**ProxyImage.java**
 
-    <pre>`<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ProxyImage</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Image</span></span>{
+```java
+public class ProxyImage implements Image{
 
-       <span class="hljs-keyword">private</span> RealImage realImage;
-       <span class="hljs-keyword">private</span> String fileName;
+   private RealImage realImage;
+   private String fileName;
 
-       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ProxyImage</span><span class="hljs-params">(String fileName)</span></span>{
-          <span class="hljs-keyword">this</span>.fileName = fileName;
-       }
+   public ProxyImage(String fileName){
+      this.fileName = fileName;
+   }
 
-       <span class="hljs-annotation">@Override</span>
-       <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">()</span> </span>{
-          <span class="hljs-keyword">if</span>(realImage == <span class="hljs-keyword">null</span>){
-             realImage = <span class="hljs-keyword">new</span> RealImage(fileName);
-          }
-          realImage.display();
-       }
-    }
-    `</pre>
+   @Override
+   public void display() {
+      if(realImage == null){
+         realImage = new RealImage(fileName);
+      }
+      realImage.display();
+   }
+}
+```
 
-    ### 第三步
+### 第三步
 
-    使用ProxyImage在需要的时候获得RealImage类的对象
+使用ProxyImage在需要的时候获得RealImage类的对象
 
-    **ProxyPatternDemo.java**
+**ProxyPatternDemo.java**
 
-    <pre>`    <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">ProxyPatternDemo</span> {
+```java
+public class ProxyPatternDemo {
 
-           <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
-              Image image = <span class="hljs-keyword">new</span> ProxyImage(<span class="hljs-string">"test_10mb.jpg"</span>);
+   public static void main(String[] args) {
+      Image image = new ProxyImage("test_10mb.jpg");
 
-              <span class="hljs-comment">//image will be loaded from disk</span>
-              image.display();
-              System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">""</span>);
+      //image will be loaded from disk
+      image.display();
+      System.out.println("");
 
-              <span class="hljs-comment">//image will not be loaded from disk</span>
-              image.display();     
-           }
-        }
-    `</pre>
+      //image will not be loaded from disk
+      image.display(); 	
+   }
+}
+```
 
-    ### 第四步
+### 第四步
 
-    <pre>`校验输出
+校验输出
+
+```java
+
+Loading test_10mb.jpg
+Displaying test_10mb.jpg
+Displaying test_10mb.jpg
+
+```
