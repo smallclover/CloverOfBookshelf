@@ -1,3 +1,10 @@
+>[原文链接][1]
+> 译者：[smallclover][2]
+>个人翻译，水平有限，如有错误欢迎指出，谢谢！
+
+[1]: http://www.tutorialspoint.com/design_pattern/proxy_pattern.htm
+[2]: http://www.smallclover.com
+
 # 设计模式-代理模式
 
 在代理模式中，我们使用一个类来代表另一个类的功能。这种类型的设计模式属于结构型设计模式的一种。
@@ -80,7 +87,7 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
               Image image = <span class="hljs-keyword">new</span> ProxyImage(<span class="hljs-string">"test_10mb.jpg"</span>);
 
               <span class="hljs-comment">//image will be loaded from disk</span>
-              image.display(); 
+              image.display();
               System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">""</span>);
 
               <span class="hljs-comment">//image will not be loaded from disk</span>
@@ -92,4 +99,3 @@ ProxyPatternDemo，我们的demo类将使用ProxyImage类去加载一个Image对
     ### 第四步
 
     <pre>`校验输出
-    
