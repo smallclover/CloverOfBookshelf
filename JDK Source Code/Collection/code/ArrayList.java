@@ -111,13 +111,13 @@ public class ArrayList<E> extends AbstractList<E>
     /**
      * Default initial capacity.
      */
-	//ArrayList默认的初始化容量
+	//默认的初始化容量
     private static final int DEFAULT_CAPACITY = 10;
 
     /**
      * Shared empty array instance used for empty instances.
      */
-	// ？？
+	  //用于多个空实例共享同一个空数组实例
     private static final Object[] EMPTY_ELEMENTDATA = {};
 
     /**
@@ -125,7 +125,7 @@ public class ArrayList<E> extends AbstractList<E>
      * distinguish this from EMPTY_ELEMENTDATA to know how much to inflate when
      * first element is added.
      */
-	 //??
+	 //用于多个默认空实例共享的空数组实例。区别于EMPTY_ELEMENTDATA, ?
     private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
 
     /**
@@ -134,14 +134,16 @@ public class ArrayList<E> extends AbstractList<E>
      * empty ArrayList with elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA
      * will be expanded to DEFAULT_CAPACITY when the first element is added.
      */
-    transient Object[] elementData; // non-private to simplify nested class access
-	//非私有化，简化嵌套类访问
+    // ArrayList的元素存储在该数组当中，数组的长度就是ArrayList的容量。任何空的ArrayList都是
+    //elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA 当第一个元素被添加时将会扩充容量到DEFAULT_CAPACITY
+    transient Object[] elementData; // non-private to simplify nested class access	//非私有化，简化嵌套类访问
+
     /**
      * The size of the ArrayList (the number of elements it contains).
      *
      * @serial
      */
-	 //ArrayList的大小，它包含的元素数量
+	 //ArrayList的大小(它包含的元素数量)
     private int size;
 
     /**
@@ -167,7 +169,7 @@ public class ArrayList<E> extends AbstractList<E>
     /**
      * Constructs an empty list with an initial capacity of ten.
      */
-	//构造一个初始容量为10的空list 
+	//构造一个初始容量为10的空list
     public ArrayList() {
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
@@ -198,8 +200,10 @@ public class ArrayList<E> extends AbstractList<E>
      * list's current size.  An application can use this operation to minimize
      * the storage of an <tt>ArrayList</tt> instance.
      */
+    //缩减该ArrayList的容量到该list目前的大小，应用程序能使用该操作减少ArrayList的存储占用
     public void trimToSize() {
         modCount++;
+        //elementData.length当前数组的容量
         if (size < elementData.length) {
             elementData = (size == 0)
               ? EMPTY_ELEMENTDATA
@@ -250,6 +254,7 @@ public class ArrayList<E> extends AbstractList<E>
      * Attempts to allocate larger arrays may result in
      * OutOfMemoryError: Requested array size exceeds VM limit
      */
+     //数组能分配的最大容量，一些VM会在数组对象中保存一些首部信息，尝试分配一个过大的数组可能会导致OOM
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     /**
@@ -261,7 +266,7 @@ public class ArrayList<E> extends AbstractList<E>
     private void grow(int minCapacity) {
         // overflow-conscious code
         int oldCapacity = elementData.length;
-        int newCapacity = oldCapacity + (oldCapacity >> 1);
+        int newCapacity = oldCapacity + (oldCapacity >> 1);//扩容3/2
         if (newCapacity - minCapacity < 0)
             newCapacity = minCapacity;
         if (newCapacity - MAX_ARRAY_SIZE > 0)
@@ -283,6 +288,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @return the number of elements in this list
      */
+    //返回list元素数量
     public int size() {
         return size;
     }
@@ -292,6 +298,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @return <tt>true</tt> if this list contains no elements
      */
+    //如果list不包含任何元素返回true
     public boolean isEmpty() {
         return size == 0;
     }
@@ -305,6 +312,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @param o element whose presence in this list is to be tested
      * @return <tt>true</tt> if this list contains the specified element
      */
+    //如果list中包括指定的元素返回true
     public boolean contains(Object o) {
         return indexOf(o) >= 0;
     }
@@ -316,6 +324,7 @@ public class ArrayList<E> extends AbstractList<E>
      * <tt>(o==null&nbsp;?&nbsp;get(i)==null&nbsp;:&nbsp;o.equals(get(i)))</tt>,
      * or -1 if there is no such index.
      */
+    //返回指定元素第一次出现的位置，如果不存在返回-1
     public int indexOf(Object o) {
         if (o == null) {
             for (int i = 0; i < size; i++)
@@ -434,6 +443,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
+    //返回list指定位置的元素
     public E get(int index) {
         rangeCheck(index);
 
@@ -449,6 +459,7 @@ public class ArrayList<E> extends AbstractList<E>
      * @return the element previously at the specified position
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
+    //替换list中指定位置的元素
     public E set(int index, E element) {
         rangeCheck(index);
 
