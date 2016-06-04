@@ -202,7 +202,9 @@ public class ArrayList<E> extends AbstractList<E>
      */
     //缩减该ArrayList的容量到该list目前的大小，应用程序能使用该操作减少ArrayList的存储占用
     public void trimToSize() {
-        modCount++;
+        modCount++;//该字段由父类AbstractList定义，每次当ArrayList对象进行结构调整时（如add方法或remove方法增删改查）
+        //这个字段就递增1.
+        //每个迭代器实例都有一个expectedModCount字段
         //elementData.length当前数组的容量
         if (size < elementData.length) {
             elementData = (size == 0)
@@ -263,6 +265,7 @@ public class ArrayList<E> extends AbstractList<E>
      *
      * @param minCapacity the desired minimum capacity
      */
+    //扩充容量，确保它以最小的容量容纳指定的元素
     private void grow(int minCapacity) {
         // overflow-conscious code
         int oldCapacity = elementData.length;
@@ -579,6 +582,7 @@ public class ArrayList<E> extends AbstractList<E>
      * Removes all of the elements from this list.  The list will
      * be empty after this call returns.
      */
+    // 移除list的所有元素，list在调用返回之后将被置空。
     public void clear() {
         modCount++;
 
