@@ -1044,7 +1044,7 @@ public class ArrayList<E> extends AbstractList<E>
             throw new IllegalArgumentException("fromIndex(" + fromIndex +
                                                ") > toIndex(" + toIndex + ")");
     }
-
+    //随机访问
     private class SubList extends AbstractList<E> implements RandomAccess {
         private final AbstractList<E> parent;
         private final int parentOffset;
