@@ -233,6 +233,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     /**
      * The default initial capacity - MUST be a power of two.
      */
+    //默认的初始化容量-必须是2的倍数
     static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // aka 16 左移4位相当于乘2的4次方也就是16
 
     /**
@@ -240,11 +241,13 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * by either of the constructors with arguments.
      * MUST be a power of two <= 1<<30.
      */
+    //最大容量
     static final int MAXIMUM_CAPACITY = 1 << 30;
 
     /**
      * The load factor used when none specified in constructor.
      */
+    //默认装载因子，当没有指定构造器时
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /**
@@ -255,6 +258,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * tree removal about conversion back to plain bins upon
      * shrinkage.
      */
+    //超过这个阈值将使用红黑树组织桶中的结点，而不是链表 
     static final int TREEIFY_THRESHOLD = 8;
 
     /**
@@ -1789,7 +1793,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * extends Node) so can be used as extension of either regular or
      * linked node.
      */
-    //当达到临界值的时候将链表转化为红黑树 
+    //当达到临界值的时候将链表转化为红黑树
     static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
         TreeNode<K,V> parent;  // red-black tree links
         TreeNode<K,V> left;
