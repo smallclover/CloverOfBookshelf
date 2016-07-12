@@ -339,11 +339,28 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * to incorporate impact of the highest bits that would otherwise
      * never be used in index calculations because of table bounds.
      */
-    static final int hash(Object key) {
+    static final int hash(Object key) {//jdk1.8 & jdk1.7
         int h;
+		//h = key.hashCode 第一步
+		//h ^(h >>> 16)高位参与运算 第二步
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+	
     }
-
+	/**
+	static int indexFor(int h, int length){
+		return h & (length - 1);//jdk1.7源码，jdk1.8没有这个方法
+		//第三步 取模运算(取余运算)
+		
+	}
+	**/
+	/**
+	通过h & (table.length -1)来得到该对象的保存位，而HashMap底层数组的长度总是2的n次方，这是HashMap在速度上的优化。
+	当length总是2的n次方时，h& (length-1)运算等价于对length取模，也就是h%length，但是&比%具有更高的效率
+	
+	
+	**/
+	
+	
     /**
      * Returns x's Class if it is of the form "class C implements
      * Comparable<C>", else null.
@@ -409,7 +426,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     /**
      * The number of key-value mappings contained in this map.
      */
-    transient int size;
+    transient int size;//HashMap中键值对的实际数量
 
     /**
      * The number of times this HashMap has been structurally modified
@@ -429,14 +446,19 @@ public class HashMap<K,V> extends AbstractMap<K,V>
     // Additionally, if the table array has not been allocated, this
     // field holds the initial array capacity, or zero signifying
     // DEFAULT_INITIAL_CAPACITY.)
-    int threshold;
+	
+	
+	//smallclover threshold = length * factor？
+    int threshold; //所能容纳的key-value对极限 
+	
 
     /**
      * The load factor for the hash table.
-     *
+     *	
      * @serial
      */
-    final float loadFactor;
+	//哈希表的负载因子 
+    final float loadFactor;//负载因子
 
     /* ---------------- Public operations -------------- */
 
@@ -614,6 +636,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      *         previously associated <tt>null</tt> with <tt>key</tt>.)
      */
     public V put(K key, V value) {
+		//对key做hash
         return putVal(hash(key), key, value, false, true);
     }
 
