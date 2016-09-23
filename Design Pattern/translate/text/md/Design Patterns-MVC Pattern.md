@@ -28,7 +28,7 @@ Model：模型 View：视图 Controller：控制器
 
 MVCPatternDemo，我们的demo类，将使用StudentController来展示如何使用MVC模式
 
-
+![image](/Design Pattern/translate/image/MVC Pattern.jpg)
 
 ### 第一步
 
