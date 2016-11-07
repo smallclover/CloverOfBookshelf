@@ -15,3 +15,5 @@
 + Chain of Responsibility
 + Command
 + Proxy
++ MVC
++ Front Controller
