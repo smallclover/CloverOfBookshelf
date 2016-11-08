@@ -846,6 +846,8 @@ public class DispatcherServlet extends FrameworkServlet {
 
 		// Keep a snapshot of the request attributes in case of an include,
 		// to be able to restore the original attributes after the include.
+		//如果该请求是include请求，那么保存一份快照版本的request域中的数据。doDispatcher方法结束之后
+		//这个快照版本中的数据将会覆盖新request域中的数据
 		Map<String, Object> attributesSnapshot = null;
 		if (WebUtils.isIncludeRequest(request)) {
 			logger.debug("Taking snapshot of request attributes before include");
@@ -858,7 +860,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 			}
 		}
-
+		//request域中设置一些属性
 		// Make framework objects available to handlers and view objects.
 		request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());
 		request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);
@@ -873,6 +875,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);
 
 		try {
+			//交给该方法进行请求分发处理
 			doDispatch(request, response);
 		}
 		finally {

@@ -957,6 +957,8 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		long startTime = System.currentTimeMillis();
 		Throwable failureCause = null;
 
+		//得到与当前请求线程绑定的LocalContext和ServletRequestAttributes对象
+		//然后构造新的Locale和ServletRequestAttributes对象
 		LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();
 		LocaleContext localeContext = buildLocaleContext(request);
 
@@ -965,11 +967,11 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 
 		WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);
 		asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());
-
+		//让新构造的LocaleContext和RequestAttributes与当前请求线程绑定(通过ThreadLocal完成)
 		initContextHolders(request, localeContext, requestAttributes);
 
 		try {
-			doService(request, response);
+			doService(request, response);//抽象方法具体由子类实现
 		}
 		catch (ServletException ex) {
 			failureCause = ex;
@@ -985,6 +987,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		}
 
 		finally {
+			//doService方法执行完成之后重置LocaleContext和RequestAttributes，重置就是解除请求线程与以上两个对象的绑定
 			resetContextHolders(request, previousLocaleContext, previousAttributes);
 			if (requestAttributes != null) {
 				requestAttributes.requestCompleted();
@@ -1003,7 +1006,9 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 					}
 				}
 			}
-
+			//执行成功之后发布ServletRequestHandledEvent事件
+			//可以通过注册监听器来监听该事件的发布
+			//注册监听器的类型为ApplicationListener接口类型
 			publishRequestHandledEvent(request, startTime, failureCause);
 		}
 	}
