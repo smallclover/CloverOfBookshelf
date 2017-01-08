@@ -912,10 +912,12 @@ public class DispatcherServlet extends FrameworkServlet {
 			Exception dispatchException = null;
 
 			try {
+				//检查请求是否是multipart（比如：文件上传），如果是将通过MultipartResolver解析
 				processedRequest = checkMultipart(request);
 				multipartRequestParsed = processedRequest != request;
 
 				// Determine handler for the current request.
+				//请求到处理器的映射，通过HandlerrMapping进行映射
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null || mappedHandler.getHandler() == null) {
 					noHandlerFound(processedRequest, response);
@@ -923,9 +925,11 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 
 				// Determine handler adapter for the current request.
+				//处理器适配，即将我们的处理器包装成相应的适配器（从而支持多种类型的处理器）
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 
 				// Process last-modified header, if supported by the handler.
+				//304缓存支持
 				String method = request.getMethod();
 				boolean isGet = "GET".equals(method);
 				if (isGet || "HEAD".equals(method)) {
@@ -939,12 +943,14 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
+				//执行处理器相关的拦截器的预处理
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
 				try {
 					// Actually invoke the handler.
+					//由适配器执行处理器（调用处理器相应的功能处理方法）
 					mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 				}
 				finally {
@@ -954,6 +960,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 
 				applyDefaultViewName(request, mv);
+				//执行处理器相关的拦截器的后处理
 				mappedHandler.applyPostHandle(processedRequest, response, mv);
 			}
 			catch (Exception ex) {
@@ -1009,7 +1016,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				errorView = (mv != null);
 			}
 		}
-
+		//解析视图并进行视图的渲染
 		// Did the handler return a view to render?
 		if (mv != null && !mv.wasCleared()) {
 			render(mv, request, response);
@@ -1028,7 +1035,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			// Concurrent handling started during a forward
 			return;
 		}
-
+		//执行处理器相关的拦截器的完成后处理
 		if (mappedHandler != null) {
 			mappedHandler.triggerAfterCompletion(request, response, null);
 		}
