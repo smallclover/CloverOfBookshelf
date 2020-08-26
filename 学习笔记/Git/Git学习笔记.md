@@ -15,3 +15,9 @@
 
 2020年8月25日 **顺**
 
++ HEAD，可以看作一个总是指向最近一次提交记录的指针，HEAD也可以指向分支名
++ `git checkout <记录hash>` 来将HEAD指向此hash所代表的提交记录。
++ `git rebase -i HEAD~5` 打开rebase的UI模式。
+
+2020年8月26日 **顺**
+
